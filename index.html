@@ -719,13 +719,13 @@ const st=()=>({color:css('--line'),weight:.8,fillColor:css('--land'),fillOpacity
 map.createPane('base').style.zIndex=150;
 const land=L.geoJSON(JP,{interactive:false,style:st,pane:'base',renderer:L.canvas({pane:'base'})}).addTo(map);
 const GS='<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル</a>',OS='© OpenStreetMap contributors';
-const T={'標準（CARTO）':['https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',OS+' © CARTO'],
-'OpenStreetMap':['https://tile.openstreetmap.org/{z}/{x}/{y}.png',OS],
+const T={'OpenStreetMap':['https://tile.openstreetmap.org/{z}/{x}/{y}.png',OS],
 '淡色（地理院）':['https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',GS],
+'ストリート（Esri）':['https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}','Tiles © Esri'],
 '標準（地理院）':['https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png',GS],
 '航空写真':['https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg',GS]};
 let tl=null;
-function setT(n){if(!T[n])n='標準（CARTO）';if(tl)tl.remove();tl=L.tileLayer(T[n][0],{subdomains:'abcd',minNativeZoom:5,maxNativeZoom:18,maxZoom:18,attribution:T[n][1]}).addTo(map);$('#ts').value=n;try{localStorage.setItem('tabi-tile',n)}catch(e){}}
+function setT(n){if(!T[n])n='OpenStreetMap';if(tl)tl.remove();tl=L.tileLayer(T[n][0],{subdomains:'abcd',minNativeZoom:5,maxNativeZoom:18,maxZoom:18,attribution:T[n][1]}).addTo(map);$('#ts').value=n;try{localStorage.setItem('tabi-tile',n)}catch(e){}}
 $('#ts').innerHTML=Object.keys(T).map(k=>'<option>'+k+'</option>').join('');
 $('#ts').onchange=e=>setT(e.target.value);
 let t0=null;try{t0=localStorage.getItem('tabi-tile')}catch(e){}
